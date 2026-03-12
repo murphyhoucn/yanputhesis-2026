@@ -1,0 +1,143 @@
+%% This is file `main.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% yanputhesis.dtx  (with options: `sample')
+%% Copyright (C) 2022 by Shangkun Shen
+%% 
+%% It may be distributed and/or modified under the conditions of the LaTeX
+%% Project Public License, either version 1.3b of this license or (at your
+%% option) any later version. The latest version of this license is in
+%%     https://www.latex-project.org/lppl.txt
+%% and version 1.3b or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
+%%=============================================================================%
+%% 设置论文格式（学位、盲评、Adobe 字体）
+%%-----------------------------------------------------------------------------%
+%% 博士、正常版本、不使用 Adobe 字体
+%% \documentclass[lang=chs, degree=phd, blindreview=false, adobe=false]{yanputhesis}
+%% 博士、盲评版本、不使用 Adobe 字体
+%% \documentclass[lang=chs, degree=phd, blindreview=true, adobe=false]{yanputhesis}
+%% 博士、正常版本、强制使用 Windows 系统字体
+% \documentclass[lang=chs, degree=phd, blindreview=false, winfonts=true]{yanputhesis}
+%% 硕士、正常版本、不使用 Adobe 字体
+\documentclass[lang=chs, degree=master, blindreview=false, adobe=false]{yanputhesis}
+%% 硕士、盲评版本、不使用 Adobe 字体
+%% \documentclass[lang=chs, degree=master, blindreview=true, adobe=false]{yanputhesis}
+%%=============================================================================%
+%% 导言区：请自行添加额外宏包
+%%-----------------------------------------------------------------------------%
+\usepackage{blindtext}                                      % 生成无意义文本
+\usepackage{metalogo}                                       % 软件标志
+\usepackage[binary-units=true]{siunitx}                     % 物理量单位
+\usepackage{amsmath}                                        % 基础数学库
+%%=============================================================================%
+%% 版本控制配置
+%%-----------------------------------------------------------------------------%
+%% 设置当前使用的版本目录名
+%% 通过修改这个变量轻松切换不同版本
+%% Thesis_v1_20250901, Thesis_v2_20251101 等
+\newcommand{\VersionControl}{Thesis_v1_20250901}        % 当前版本
+\newcommand{\VersionDate}{2025-09-01}                      % 版本日期  
+\newcommand{\VersionDescription}{模块化版本控制结构}        % 版本描述
+%% 版本说明：
+%% v1_20250901 - 初始模块化版本，包含完整的章节结构
+%% v2_20251101 - [预留给未来版本使用]
+%% v3_20251201 - [预留给未来版本使用]
+%%=============================================================================%
+%% 基本信息录入
+%%-----------------------------------------------------------------------------%
+\title{基于 LaTeX 排版的 \\ 西北工业大学论文模板}{          % 中英文标题
+    Yet Another Thesis Template of \\ Northwestern Polytechnical University
+}                                                           % 请自行断行
+\author{\blindreview{张三丰}}{\blindreview{Sanfeng Zhang}}  % 姓名（添加盲评标记）
+\date{2022年6月}{Jun 2022}                                  % 答辩日期
+\school{数学与统计学院}{School of Mathematics and Statistics}% 学院
+\major{数学}{Philosophy in Mathematics}                     % 专业 博士请添加 Ph
+\advisor{\blindreview{李四海}}{\blindreview{Sihai Li}}      % 导师（添加盲评标记）
+\studentnumber{2016123456}                                  % 学号
+\funding{本研究得到玄学基金（编号23336666）资助。}{         % 基金资助
+    The present work is supported by Funding of Metaphysics %
+    (Project No：23336666).}                                %
+%%=============================================================================%
+%% 文档开始
+%%-----------------------------------------------------------------------------%
+\begin{document}
+%%-----------------------------------------------------------------------------%
+%% 总前言，包含封皮页、中英文标题、中英文摘要、目录
+%%-----------------------------------------------------------------------------%
+\frontmatter                                                % 前言部分
+\maketitle                                                  % 封皮页及标题页
+%%-----------------------------------------------------------------------------%
+\makeCommitteePage{                                         % 学位论文评阅人
+    \reviewers{\fullBlindReview{5}}                         % 和答辩委员会名单
+    \committee{2023 年 x 月 y 日}{
+        \defenseChair{赵钱孙}{教授}{西北工业大学}
+        \committeeMember{周吴郑}{教授}{西北工业大学}
+        \committeeMember{冯陈褚}{教授}{西北工业大学}
+        \committeeMember{蒋沈韩}{教授}{西北工业大学}
+        \committeeMember{朱秦尤}{教授}{西北工业大学}
+        \committeeMember{何吕施}{教授}{西北工业大学}
+        \committeeMember{孔曹严}{教授}{西北工业大学}
+        \defenseSecretary{金魏陶}{教授}{西北工业大学}
+    }
+}
+%%-----------------------------------------------------------------------------%
+%% 中英文摘要（使用版本控制变量动态引入）
+%%-----------------------------------------------------------------------------%
+\input{\VersionControl/abstract/chinese-abstract}          % 中文摘要
+\input{\VersionControl/abstract/english-abstract}          % 英文摘要
+%%-----------------------------------------------------------------------------%
+\tableofcontents                                            % 目录
+\listoffigures                                              % 图目录（学校未做要求）
+\listoftables                                               % 表目录（学校未做要求）
+\printnomenclature                                          % 符号表（学校未做要求）
+%%=============================================================================%
+%% 正文部分（使用版本控制变量动态引入各章节）
+%%-----------------------------------------------------------------------------%
+\mainmatter
+\sDefault
+
+%% 第一章：绪论
+\input{\VersionControl/chapters/chapter01-introduction}
+\cleardoublepage
+
+%% 第二章：相关理论基础
+\input{\VersionControl/chapters/chapter02-theory}
+\cleardoublepage
+
+%% 第三章：主要方法一
+\input{\VersionControl/chapters/chapter03-method_1}
+\cleardoublepage
+
+%% 第四章：主要方法二
+\input{\VersionControl/chapters/chapter04-method_2}
+\cleardoublepage
+
+%% 第五章：总结与展望
+\input{\VersionControl/chapters/chapter05-conclusion}
+\cleardoublepage
+
+%%=============================================================================%
+%% 参考文献以及附录（使用版本控制变量动态引入）
+%%-----------------------------------------------------------------------------%
+%% \bibliographystyle{nputhesis}                               % GB/T 7714-2015 格式
+\bibliographystyle{nputhesis-noslash}                       % 参考文献改进格式
+\bibliography{\VersionControl/references/reference}         % 参考文献（使用版本控制变量）
+%% 附录部分
+\input{\VersionControl/chapters/appendices}         % 附录
+%%=============================================================================%
+%% 文档附页部分（致谢、参加科研情况、知识产权与原创性声明）
+%%-----------------------------------------------------------------------------%
+\backmatter                                                 % 文档附页部分
+%%-----------------------------------------------------------------------------%
+\input{\VersionControl/acknowledgement/acknowledgements}   % 致谢
+\input{\VersionControl/acknowledgement/accomplishments}    % 参加科研情况
+%%-----------------------------------------------------------------------------%
+\makestatement                                              % 知识产权与原创性声明
+%%=============================================================================%
+%% 文档结束
+%%-----------------------------------------------------------------------------%
+\end{document}
+%%=============================================================================%
