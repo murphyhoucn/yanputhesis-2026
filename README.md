@@ -72,3 +72,37 @@ Thesis_v1_20250901/
     └── reference.bib               % 参考文献
 ```
 
+
+## 个人记录
+
+## VSCode
+`Alt + z`, 切换自动换行与不换行。
+
+## debug command
+``` bash
+xelatex -interaction=nonstopmode -output-directory=debug main.tex
+```
+
+### 《中国图书分类法》- 分类号
+- https://www.clcindex.com/category/TP751/
+- 中图分类  T 工业技术  TP 自动化技术、计算机技术  TP7 遥感技术  TP75 遥感图像的解译、识别与处理  TP751 图像处理方法
+
+### BibTex
+- 直接去论文出版商/期刊网站
+- ⭐Google Scholar
+- ⭐Semantic Scholar（最佳 Google Scholar 替代）
+- DBLP（计算机科学领域神器）：https://dblp.org/search
+- https://www.doi2bib.org/
+
+## Jupyterlab
+
+> VSCode 客户端实现不了我想要的在文字编辑时使用触控板双指进行画面缩放！
+
+- 初稿阶段（Overleaf）：在浏览器上进行线上编辑与编译，只考虑内容不考虑排版格式。但在成稿精修期，多平台维护极易导致文档版本不一致。
+- 尝试方案（VSCode Remote Tunnels）：虽然能将本地工程映射到浏览器远程修改，但依然不支持触控板双指缩放，阅读体验不佳。
+- 最终方案（JupyterLab）：使用 JupyterLab，通过 localhost 启动，既满足了浏览器端顺滑的双指缩放，又能直接对本地文件进行直接编辑与自动保存。无需多平台同步，本地文件即是唯一版本。
+
+## Jupyterlab plugin
+- pip install jupyterlab-unfold
+- pip install jupyterlab-git
+- pip install jupyterlab-latex

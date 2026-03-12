@@ -24,6 +24,7 @@
 \usepackage{siunitx}
 \usepackage{amsmath}                                        % 基础数学库
 \usepackage{ifplatform}
+\usepackage{eso-pic}                                       % 页面背景图
 \windowstrue   % 声明是 Windows
 
 %%=============================================================================%
@@ -61,7 +62,7 @@
 \major{信息与通信工程}{Information and Communication Engineering}     % 专业 博士请添加 Ph
 \advisor{\blindreview{李四海}}{\blindreview{Sihai Li}}      % 导师（添加盲评标记）
 \advisorAcademicRank{教授}{Professor}						  % 导师中英学术职位（教授 Professor、副教授 Associate Professor、研究员 Researcher 和讲师 Lecturer）
-\studentnumber{2016123456}                                  % 学号
+\studentnumber{2023123456}                                  % 学号
 \funding{本研究得到玄学基金（编号23336666）资助。}{         % 基金资助
     The present work is supported by Funding of Metaphysics %
     (Project No：23336666).}                                %
@@ -69,6 +70,11 @@
 %% 文档开始
 %%-----------------------------------------------------------------------------%
 \begin{document}
+\AddToShipoutPictureBG*{%
+    \AtPageLowerLeft{%
+        \includegraphics[draft=false,width=\paperwidth,height=\paperheight]{Resources/acad_head.jpg}%
+    }%
+}
 %%-----------------------------------------------------------------------------%
 %% 总前言，包含封皮页、中英文标题、中英文摘要、目录
 %%-----------------------------------------------------------------------------%
@@ -136,7 +142,24 @@
 \input{\VersionControl/acknowledgement/acknowledgements}   % 致谢
 \input{\VersionControl/acknowledgement/accomplishments}    % 参加科研情况
 %%-----------------------------------------------------------------------------%
-\makestatement                                              % 知识产权与原创性声明
+% \makestatement                                            % 知识产权与原创性声明（改为插入签字扫描页）
+\includepdf[pages=1,fitpaper=true]{Resources/sign.pdf}
+
+% 追加两页空白页
+\clearpage
+\thispagestyle{empty}\null\newpage
+\thispagestyle{empty}\null\newpage
+
+% 追加彩色封底页
+\clearpage
+\AddToShipoutPictureBG*{%
+    \AtPageLowerLeft{%
+        \includegraphics[draft=false,width=\paperwidth,height=\paperheight]{Resources/acad_tail.jpg}%
+    }%
+}
+\thispagestyle{empty}\null
+\clearpage
+
 %%=============================================================================%
 %% 文档结束
 %%-----------------------------------------------------------------------------%

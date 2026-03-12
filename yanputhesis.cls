@@ -24,6 +24,7 @@
 \newif\if@npu@type@phd                                      % 博士版本标记
 \newif\if@npu@type@mst                                      % 硕士版本标记
 \newif\if@npu@type@bcl                                      % 本科版本标记
+\newif\if@npu@academic										% 学术学位标记
 \newif\if@npu@output@blindreview                            % 盲评版本标记
 \newif\if@npu@font@adobe                                    % Adobe 字体标记
 \newif\if@npu@font@winfonts                                 % 强制使用 Win 字体
@@ -37,9 +38,11 @@
 \DeclareOptionX{blindreview}[true]{\csname @npu@output@blindreview#1\endcsname}
 \DeclareOptionX{adobe}[true]{\csname @npu@font@adobe#1\endcsname}
 \DeclareOptionX{winfonts}[true]{\csname @npu@font@winfonts#1\endcsname}
+\DeclareOptionX{academic}[true]{\csname @npu@academic#1\endcsname}
 \DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{book}} % 传递参数到 book 类
 \ExecuteOptionsX{lang=chs}                                  % 默认为中文版本
 \ExecuteOptionsX{degree=phd}                                % 默认为博士版本
+\ExecuteOptionsX{academic=true}                             % 默认为学术型硕博
 \ExecuteOptionsX{blindreview=false}                         % 默认不开启盲评模式
 \ExecuteOptionsX{adobe=false}                               % 默认不用 Adobe 字体
 \ExecuteOptionsX{winfonts=false}                            % 默认不开启强制选项
@@ -47,6 +50,7 @@
 \LoadClass[11pt, a4paper, openany, twoside]{book}           % 默认双面印刷
 \RequirePackage{etoolbox}                                   % LaTeX 补丁工具
 \RequirePackage{amssymb}                                    % AMS 数学符号
+
 
 %% 屏蔽无害的编译警告
 \RequirePackage{silence}                                    % 警告控制包
@@ -120,7 +124,7 @@
 \newcommand\defaultHei{SimHei}                              % 黑体，用于标题
 \newcommand\defaultKai{KaiTi}                               % 楷体，一般用于强调
 \newcommand\defaultFag{FangSong}                            % 仿宋，一般用于强调
-\if@npu@font@winfonts\relax                                 % 检测 winfonts 选项
+\if@npu@font@winfonts\relax                                 % 检测 de 选项
 \else                                                       %
     \if@npu@font@adobe                                      % 检测 Adobe 选项
         \renewcommand\defaultSog{Adobe Song Std}            % 宋体，用于正文
@@ -269,10 +273,10 @@
 \RequirePackage{setspace}                                   % 空白长度控制
 \RequirePackage{ragged2e}                                   % 对齐
 \DeclareCaptionFont{cWuhao}{\sWuhao}                        % 图表标题为五号
-\captionsetup[table]{labelfont=cWuhao,textfont=cWuhao}      %
-\captionsetup[figure]{labelfont=cWuhao,textfont=cWuhao}     %
-\captionsetup[subtable]{labelformat=simple, aboveskip=0pt}  %
-\captionsetup[subfigure]{labelformat=simple, aboveskip=0pt} %
+\captionsetup[table]{labelfont=cWuhao, textfont=cWuhao, aboveskip=10pt, belowskip=0pt}
+\captionsetup[figure]{labelfont=cWuhao, textfont=cWuhao, aboveskip=10pt, belowskip=0pt}
+\captionsetup[subtable]{labelformat=simple, aboveskip=10pt, belowskip=-5pt}
+\captionsetup[subfigure]{labelformat=simple, aboveskip=10pt, belowskip=-5pt}
 \AtBeginEnvironment{tabular}{\sWuhao}                       % 表格内容为五号
 \AtBeginEnvironment{tabularx}{\sWuhao}                      %
 \newcolumntype{C}{>{\centering\arraybackslash}X}            % 等宽居中
@@ -446,12 +450,20 @@
     \newcommand{\nwpu@chs@doctitle}{{\nwpu@chs@degree}学位论文}
     \newcommand{\nwpu@chs@header}{\nwpu@chs@schoolname\nwpu@chs@doctitle}
 \fi                                                         %
+\if@npu@academic											% 控制内封模板的首项名称
+	\newcommand{\nwpu@chs@innerCoverFirstOption}{学科专业}	 % 学术学位应该是学科专业
+	\newcommand{\nwpu@chs@outerCoverFirstOption}{学{\enspace}科{\enspace}专{\enspace}业}
+\else
+	\newcommand{\nwpu@chs@innerCoverFirstOption}{专业领域}	 % 专业学位应该是专业领域
+	\newcommand{\nwpu@chs@outerCoverFirstOption}{专{\enspace}业{\enspace}领{\enspace}域}
+\fi
 \newcommand{\nwpu@eng@doctitle}{\nwpu@eng@degree Thesis}    % 英文文档名和页眉
 \newcommand{\nwpu@eng@header}{\nwpu@eng@doctitle of \nwpu@eng@schoolname}
+
 %%-----------------------------------------------------------------------------%
 \if@npu@lang@chs                                            % 定制中文特殊页面
     \newcommand{\nwpu@page@ack}{致{\quad}谢}                %
-    \newcommand{\nwpu@page@acp}{在学期间发表的学术成果和参加%
+    \newcommand{\nwpu@page@acp}{在学期间取得的学术成果和参加%
         科研情况}                                           %
 \else                                                       % 定制英文特殊页面
     \newcommand{\nwpu@page@ack}{Acknowledgements}           %
@@ -479,6 +491,7 @@
 \newcommand{\nwpu@chs@school}{\chs@space}                   % 学院（中文）
 \newcommand{\nwpu@chs@major}{\chs@space}                    % 专业（中文）
 \newcommand{\nwpu@chs@advisor}{\chs@space}                  % 导师（中文）
+\newcommand{\nwpu@chs@advisorAcademicRank}{\chs@space}      % 导师职称（中文）
 \newcommand{\nwpu@chs@funding}{\chs@space}                  % 基金赞助（中文）
 %%-----------------------------------------------------------------------------%
 \newcommand{\nwpu@eng@title}{\chs@space}                    % 标题（英文）
@@ -487,6 +500,7 @@
 \newcommand{\nwpu@eng@school}{\chs@space}                   % 学院（英文）
 \newcommand{\nwpu@eng@major}{\chs@space}                    % 专业（英文）
 \newcommand{\nwpu@eng@advisor}{\chs@space}                  % 导师（英文）
+\newcommand{\nwpu@eng@advisorAcademicRank}{\chs@space}      % 导师职称（英文）
 \newcommand{\nwpu@eng@funding}{\chs@space}                  % 基金赞助（英文）
 %%-----------------------------------------------------------------------------%
 \newcommand{\nwpu@uid}{2000123456}                          % default 学号
@@ -516,10 +530,14 @@
     \renewcommand{\nwpu@chs@advisor}{#1}                    %
     \renewcommand{\nwpu@eng@advisor}{#2}                    %
 }                                                           %
+\newcommand{\advisorAcademicRank}[2]{                       % 导师学术等级
+	\renewcommand{\nwpu@chs@advisorAcademicRank}{#1}        %
+	\renewcommand{\nwpu@eng@advisorAcademicRank}{#2}        %
+}  
 \newcommand{\funding}[2]{                                   % 设置基金资助
     \renewcommand{\nwpu@chs@funding}{#1}                    %
     \renewcommand{\nwpu@eng@funding}{#2}                    %
-}                                                           %
+}                                                           %  
 \newcommand{\studentnumber}[1]{\renewcommand{\nwpu@uid}{#1}}% 设置学号
 %%=============================================================================%
 %%=============================================================================%
@@ -528,7 +546,7 @@
 \newcommand{\make@nwpu@coverpage}{                          % 设置封皮页
     \thispagestyle{empty}                                   % 清空页面格式
     \newlength{\coverpage@infowidth}                        % 基本信息表格宽度
-    \settowidth{\coverpage@infowidth}{\sWuhao ~:~ 2000000000}
+    \settowidth{\coverpage@infowidth}{\sWuhao 学校代码~:~ 2000000000}
     \newlength{\coverpage@detailwidth}                      % 具体信息对齐宽度
     \settowidth{\coverpage@detailwidth}{\sSanhao 申请学位日期}
     \begin{titlepage}                                       %
@@ -541,7 +559,7 @@
                 \renewcommand\arraystretch{1.2}             %
                 \begin{tabular}{|c|c|}\hline                %
                     {学 \hfill 校 \hfill 代 \hfill 码} & 10699     \\ \hline
-                    {分   \hfill    类    \hfill   号} & O242      \\ \hline
+                    {分   \hfill    类    \hfill   号} & TP751.1      \\ \hline
                     {密           \hfill           级} & 公开      \\ \hline
                     {学           \hfill           号} & \nwpu@uid \\ \hline
                 \end{tabular}                               %
@@ -573,11 +591,11 @@
             \sSanhao \fSong \begin{minipage}{12.5cm}        %
                 \noindent                                   %
                 \makebox[\coverpage@detailwidth][s]{        %
-                \bf 学{\enspace}科{\enspace}专{\enspace}业}{%
+                \bf \nwpu@chs@outerCoverFirstOption}{%
                 \uline{\hfill \makebox{\bf \nwpu@chs@major} \hfill}} \par
                 \makebox[\coverpage@detailwidth][s]{        %
                 \bf 指{\enspace}导{\enspace}教{\enspace}师}{%
-                \uline{\hfill \makebox{\bf \nwpu@chs@advisor} \hfill}} \par
+                \uline{\hfill \makebox{\bf \nwpu@chs@advisor\nwpu@chs@advisorAcademicRank} \hfill}} \par
                 \makebox[\coverpage@detailwidth][s]{        %
                 \bf 培{\enspace}养{\enspace}单{\enspace}位}{%
                 \uline{\hfill \makebox{\bf \nwpu@chs@school} \hfill}} \par
@@ -625,7 +643,7 @@
             \hspace{-1cm}                                   %
             \copy123\kern-\wd123\box124 \fSong \sWuhao \par % 排版结束
             \vspace{7\baselineskip}                         % 7 * 10.5pt * 1.5
-            \sSanhao 学科专业：\coverunderline[5.5cm]{\nwpu@chs@major} \\
+            \sSanhao \nwpu@chs@innerCoverFirstOption：\coverunderline[5.5cm]{\nwpu@chs@major} \\
             \sSanhao 作{\qquad}者：\coverunderline[5.5cm]{\nwpu@chs@author} \\
             \sSanhao 指导教师：\coverunderline[5.5cm]{\nwpu@chs@advisor} \\
             \fSong \sWuhao \par                             %
@@ -647,7 +665,7 @@
             \fSong \sXiaoer \vspace{3\baselineskip}         %
             \fEng \sXiaosan \textbf{By} \par                %
             \fEng \sXiaosan \textbf{\nwpu@eng@author} \par  %
-            \fEng \sXiaosan \textbf{Under the Supervision of Professor} \\
+            \fEng \sXiaosan \textbf{Under the Supervision of \nwpu@eng@advisorAcademicRank} \\
             \fEng \sXiaosan \textbf{\nwpu@eng@advisor} \par %
             \fSong \sSanhao \vspace{4\baselineskip}         %
             \fEng \sXiaosan A Dissertation Submitted to \\  %
@@ -841,23 +859,23 @@
         \sffamily\fHei\sSanhao{\appendixname~\thechapter}}{20pt}{\sSanhao}
     \renewcommand{\thechapter}{\Alph{chapter}}              %
     \renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}
-    \renewcommand{\theequation}{\alph{chapter}-\arabic{equation}}
-    \renewcommand{\thetable}{\alph{chapter}-\arabic{table}} %
-    \renewcommand{\thefigure}{\alph{chapter}-\arabic{figure}}
-    \renewcommand{\thetheorem}{\alph{chapter}.\arabic{theorem}}
-    \renewcommand{\theaxiom}{\alph{chapter}.\arabic{axiom}} %
-    \renewcommand{\thecorollary}{\alph{chapter}.\arabic{corollary}}
-    \renewcommand{\thelemma}{\alph{chapter}.\arabic{lemma}} %
-    \renewcommand{\thedefinition}{\alph{chapter}.\arabic{definition}}
-    \renewcommand{\theexample}{\alph{chapter}.\arabic{example}}
+    \renewcommand{\theequation}{\Alph{chapter}-\arabic{equation}}
+    \renewcommand{\thetable}{\Alph{chapter}-\arabic{table}} %
+    \renewcommand{\thefigure}{\Alph{chapter}-\arabic{figure}}
+    \renewcommand{\thetheorem}{\Alph{chapter}.\arabic{theorem}}
+    \renewcommand{\theaxiom}{\Alph{chapter}.\arabic{axiom}} %
+    \renewcommand{\thecorollary}{\Alph{chapter}.\arabic{corollary}}
+    \renewcommand{\thelemma}{\Alph{chapter}.\arabic{lemma}} %
+    \renewcommand{\thedefinition}{\Alph{chapter}.\arabic{definition}}
+    \renewcommand{\theexample}{\Alph{chapter}.\arabic{example}}
 }                                                           %
 %%=============================================================================%
 %%=============================================================================%
 %% 附页部分
 %%-----------------------------------------------------------------------------%
 \newenvironment{acknowledgements}{                          % 致谢
-    \renewcommand{\baselinestretch}{1.5}                    %
-    \fontsize{12pt}{13pt}\selectfont                        %
+    \renewcommand{\baselinestretch}{1.0}                    %
+    \sDefault                                               %
     \phantomsection\chapter*{\nwpu@page@ack}                %
     \markboth{\nwpu@page@ack}{\nwpu@page@ack}               %
     \addcontentsline{toc}{chapter}{\nwpu@page@ack}          %
@@ -865,8 +883,8 @@
 }{\par \cleardoublepage}                                    %
 %%-----------------------------------------------------------------------------%
 \newenvironment{accomplishments}{                           % 参加科研情况
-    \renewcommand{\baselinestretch}{1.5}                    %
-    \fontsize{12pt}{13pt}\selectfont                        %
+    \renewcommand{\baselinestretch}{1.0}                    %
+    \sDefault                                               %
     \phantomsection\chapter*{\nwpu@page@acp}                %
     \markboth{\nwpu@page@acp}{}                             %
     \addcontentsline{toc}{chapter}{\nwpu@page@acp}          %
@@ -879,10 +897,11 @@
 \begin{titlepage}
     \vspace*{-1.5mm}
     \begin{minipage}{149.6mm}
-        \centering
+        \begin{center}
             \renewcommand{\baselinestretch}{1.5}\fSong\sSihao\par
             {\bf 西北工业大学}\par
-            {\bf 学位论文知识产权声明书}\par
+            {\bf 学位论文使用授权声明}\par
+        \end{center}
         \renewcommand{\baselinestretch}{2.22}\fSong\fontsize{10.6pt}{10.6pt}\selectfont
         {\qquad}本人完全了解学校有关保护知识产权的规定，即：研究生在校攻读学位期间论文工作的
         知识产权单位属于西北工业大学。学校有权保留并向国家有关部门或机构送交论文的复印件
@@ -905,18 +924,19 @@
         \vspace*{-13mm}
         {\qquad}~\par
         \vspace*{2mm}
-        \centering
+        \begin{center}
             \renewcommand{\baselinestretch}{1.45}\fSong\sSihao
             {\bf 西北工业大学}\par
             {\bf 学位论文原创性声明}\par
+        \end{center}
         \vspace*{4mm}
         \hspace*{6mm}\begin{minipage}{141.6mm}
             \renewcommand{\baselinestretch}{2.22}\fSong\fontsize{10.6pt}{10.6pt}\selectfont
             {\qquad}\mbox{秉承学校严谨的学风和优良的科学道德，本人郑重声明：所呈交的学位论文，是本}
             \mbox{人在导师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用的内容}
             \mbox{和致谢的地方外，本论文不包含任何其他个人或集体已经公开发表或撰写过的研究成果，}
-            \mbox{不包含本人或其他已申请学位或其他用途使用过的成果。对本文的研究做出重要贡献的}
-            \mbox{个人和集体，均已在文中以明确方式表明。}\par
+            \mbox{不包含本人或他人已申请学位或其他用途使用过的成果。对本文的研究做出重要贡献的}
+            \mbox{个人和集体，均已在文中以明确方式标明。}\par
             {\qquad}本人学位论文与资料若有不实，愿意承担一切相关的法律责任。\par
             \vspace*{1.5mm}
             \hspace*{21em}\hfill 学位论文作者签名{~:~}\underline{\qquad\qquad\quad}\par
