@@ -1,0 +1,112 @@
+{
+    "latex-workshop.latex.outDir": "./tmp",
+    "latex-workshop.latex.clean.method": "glob",
+    "latex-workshop.latex.clean.subfolder.enabled": true,
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.latex.build.forceRecipeUsage": true,
+    "latex-workshop.latex.clean.fileTypes": [
+            "**/*.aux",
+            "**/*.bbl",
+            "**/*.blg",
+            "**/*.idx",
+            "**/*.ind",
+            "**/*.lof",
+            "**/*.lot",
+            "**/*.out",
+            "**/*.toc",
+            "**/*.acn",
+            "**/*.acr",
+            "**/*.alg",
+            "**/*.glg",
+            "**/*.glo",
+            "**/*.gls",
+            "**/*.ist",
+            "**/*.fls",
+            "**/*.xdv",
+            "**/*.fdb_latexmk",
+            "**/*.synctex.gz",
+            "**/*.synctex(busy)",
+            "**/*.thm",
+            "**/*.nlo",
+            "**/*.log",
+        ],
+    "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk (xelatex)",
+            "tools": [
+                "latexmk_xelatex"
+            ]
+        },
+        {
+            "name": "latexmk (xelatex-draft)",
+            "tools": [
+                "latexmk_xelatex_draft"
+            ]
+        },
+        {
+            "name": "xelatex -> bibtex -> xelatex*2",
+            "tools": [
+                "xelatex",
+                "bibtex",
+                "xelatex",
+                "xelatex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk_xelatex",
+            "command": "latexmk",
+            "args": [
+                "-xelatex",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "latexmk_xelatex_draft",
+            "command": "latexmk",
+            "args": [
+                "-xelatex",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-outdir=%OUTDIR%",
+                "-pdflatex=xelatex %O '\\PassOptionsToPackage{draft}{graphicx}\\input{%S}'",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        }
+    ],
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.showContextMenu": true,
+    "latex-workshop.intellisense.package.enabled": true,
+    "latex-workshop.message.error.show": false,
+    "latex-workshop.message.warning.show": false
+}
