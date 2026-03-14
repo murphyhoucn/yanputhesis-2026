@@ -1,4 +1,4 @@
-# Yet Another NPU Thesis Template - Murphy
+# yanputhesis-2026
 > - Forked from [Yet-Another-LaTeX-Template-for-NPU-Thesis](https://github.com/NWPUMetaphysicsOffice/Yet-Another-LaTeX-Template-for-NPU-Thesis)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -21,8 +21,8 @@
 
 ### 1. 克隆项目
 ```bash
-git clone git@github.com:murphyhoucn/yanputhesis-murphy.git
-cd yanputhesis-murphy
+git clone git@github.com:murphyhoucn/yanputhesis-2026.git
+cd yanputhesis-2026
 git submodule update --init --recursive
 ```
 
